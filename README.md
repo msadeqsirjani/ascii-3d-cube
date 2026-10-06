@@ -1,32 +1,29 @@
-# ASCII 3D Cube
+<div align="center">
+  <h1>ASCII 3D Cube</h1>
+  <p><strong>A tiny, dependency-free 3D renderer for your terminal.</strong></p>
 
-[![CI](https://github.com/msadeqsirjani/ascii-3d-cube/actions/workflows/ci.yml/badge.svg)](https://github.com/msadeqsirjani/ascii-3d-cube/actions/workflows/ci.yml)
-[![Python 3.9+](https://img.shields.io/badge/python-3.9%2B-blue.svg)](https://www.python.org/downloads/)
-[![License: MIT](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
+  <p>
+    <a href="https://github.com/msadeqsirjani/ascii-3d-cube/actions/workflows/ci.yml"><img src="https://github.com/msadeqsirjani/ascii-3d-cube/actions/workflows/ci.yml/badge.svg" alt="CI status"></a>
+    <a href="https://www.python.org/downloads/"><img src="https://img.shields.io/badge/Python-3.9%2B-3776AB?logo=python&logoColor=white" alt="Python 3.9 or newer"></a>
+    <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-00a86b.svg" alt="MIT license"></a>
+  </p>
 
-A dependency-free Python animation that renders a rotating, depth-shaded 3D
-cube directly in your terminal.
+  <p>
+    <img src="docs/images/cube_demo.gif" width="660" alt="A rotating green ASCII cube rendered in a terminal">
+  </p>
+</div>
 
-![ASCII 3D Cube demo](docs/images/cube_demo.gif)
+ASCII 3D Cube demonstrates the fundamentals of a software 3D pipeline using
+only Python and terminal characters—no runtime dependencies required.
 
-## Features
+## Highlights
 
-- Filled triangle rasterization with a z-buffer
-- Perspective projection and terminal character-aspect correction
-- Directional lighting, depth shading, and ANSI green color
-- Flicker-free animation on an alternate terminal screen
-- Automatic sizing for the current terminal
-- Linux, macOS, and Windows support
-- No runtime dependencies
-
-## Requirements
-
-- Python 3.9 or newer
-- A terminal with ANSI escape-sequence support
+- Perspective projection with character-aspect correction
+- Filled triangle rasterization and per-cell z-buffering
+- Directional lighting, depth shading, and ANSI color
+- Flicker-free, terminal-aware animation on macOS, Linux, and Windows
 
 ## Quick start
-
-Run directly from a clone:
 
 ~~~bash
 git clone https://github.com/msadeqsirjani/ascii-3d-cube.git
@@ -34,72 +31,45 @@ cd ascii-3d-cube
 python main.py
 ~~~
 
-Press **Ctrl+C** to stop. The application restores the original terminal
-contents and cursor when it exits.
+Press <kbd>Ctrl</kbd> + <kbd>C</kbd> to exit. Your original terminal screen and
+cursor are restored automatically.
 
-## Installation
-
-Install the project in an isolated environment:
+## Install
 
 ~~~bash
-python -m venv .venv
-source .venv/bin/activate
 python -m pip install .
 ascii-cube
 ~~~
 
-Windows PowerShell users can activate the environment with:
-
-~~~powershell
-.venv\Scripts\activate
-~~~
-
-The package can also be launched without the console script:
+You can also run the installed package with:
 
 ~~~bash
 python -m ascii_3d_cube
 ~~~
 
-## Command-line options
+## Options
 
-~~~text
-usage: ascii-cube [-h] [--version] [--width WIDTH] [--height HEIGHT]
-                  [--fps FPS] [--speed SPEED] [--no-color]
-~~~
-
-Examples:
+| Option | Description | Default |
+| --- | --- | ---: |
+| **--width** | Maximum canvas width | 80 |
+| **--height** | Maximum canvas height | 30 |
+| **--fps** | Target frames per second | 30 |
+| **--speed** | Rotation speed | 0.05 |
+| **--no-color** | Disable ANSI colors | off |
 
 ~~~bash
-ascii-cube --width 100 --height 36
-ascii-cube --fps 60 --speed 0.08
+ascii-cube --width 100 --height 36 --fps 60
 ascii-cube --no-color
 ~~~
 
-## Project layout
+## How it works
 
-~~~text
-ascii-3d-cube/
-├── .github/workflows/ci.yml
-├── docs/images/
-├── src/ascii_3d_cube/
-│   ├── app.py
-│   ├── cli.py
-│   ├── config.py
-│   ├── geometry.py
-│   ├── lighting.py
-│   ├── renderer.py
-│   └── terminal.py
-├── tests/
-├── CONTRIBUTING.md
-├── LICENSE
-├── README.md
-├── main.py
-└── pyproject.toml
-~~~
+Every frame rotates eight vertices in 3D space, perspective-projects them onto
+terminal cells, and rasterizes twelve triangles with barycentric coordinates.
+A z-buffer resolves visible surfaces, while directional lighting selects each
+cell's character density and color.
 
 ## Development
-
-Install the development tools and run the quality checks:
 
 ~~~bash
 python -m pip install -e ".[dev]"
@@ -107,23 +77,20 @@ ruff check .
 pytest
 ~~~
 
-See [CONTRIBUTING.md](CONTRIBUTING.md) for contribution guidelines.
+See [CONTRIBUTING.md](CONTRIBUTING.md) for the contribution workflow.
 
-To regenerate the animated demo from real renderer frames, install
-[ImageMagick](https://imagemagick.org) and run:
+<details>
+<summary>Regenerate the demo</summary>
+
+Install [ImageMagick](https://imagemagick.org), then render the GIF directly
+from the application:
 
 ~~~bash
 python scripts/generate_demo.py
 ~~~
 
-## How it works
-
-Each frame rotates the cube's eight vertices around three axes. The vertices
-are perspective-projected onto terminal cells, and each triangular face is
-rasterized with barycentric coordinates. A z-buffer selects the nearest
-surface while directional lighting and depth select the displayed character
-and green color.
+</details>
 
 ## License
 
-Distributed under the MIT License. See [LICENSE](LICENSE) for details.
+Released under the [MIT License](LICENSE).
