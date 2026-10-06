@@ -1,0 +1,60 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "ascii-3d-cube"
+version = "1.0.0"
+description = "A dependency-free, animated 3D cube rendered in the terminal."
+readme = "README.md"
+requires-python = ">=3.9"
+license = { file = "LICENSE" }
+authors = [
+    { name = "Sadegh Sirjani" },
+]
+keywords = ["ascii-art", "terminal", "3d", "animation", "python"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Environment :: Console",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Artistic Software",
+]
+dependencies = []
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0",
+    "ruff>=0.8",
+]
+
+[project.scripts]
+ascii-cube = "ascii_3d_cube.cli:main"
+
+[project.urls]
+Homepage = "https://github.com/msadeqsirjani/ascii-3d-cube"
+Issues = "https://github.com/msadeqsirjani/ascii-3d-cube/issues"
+Source = "https://github.com/msadeqsirjani/ascii-3d-cube"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+include = ["ascii_3d_cube*"]
+namespaces = false
+
+[tool.pytest.ini_options]
+addopts = "-ra --strict-markers"
+pythonpath = ["src"]
+testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 88
+target-version = "py39"
+
+[tool.ruff.lint]
+select = ["B", "E", "F", "I", "SIM", "UP"]
